@@ -1,0 +1,41 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate = "layout/main.html">
+    <div layout:fragment = "mainContent">
+        <div class="row">
+            <!-- Кнопка добавить -->
+            <div class="col-12 mt-3">
+                <form th:action="@{'/add_task'}">
+                    <button class="button_style">+ Add Task</button>
+                </form>
+            </div>
+        </div>
+        <!-- Список заданий -->
+        <div class="row">
+            <div class="col-12">
+                <table class="table table table-striped">
+                    <thead>
+                        <tr class="fw-bold">
+                            <td>ID</td>
+                            <td>NAME</td>
+                            <td>DEADLINE DATE</td>
+                            <td>IS COMPLETED</td>
+                            <td width="10%">DETAILS</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ts : ${all_tasks}">
+                            <td th:text="${ts.id}"></td>
+                            <td th:text="${ts.name}"></td>
+                            <td th:text="${ts.deadlineDate}"></td>
+                            <td th:text="${ts.isCompleted ? 'YES' : 'NO'}"></td>
+                            <td>
+                                <a th:href="@{'/details/' + ${ts.id}}" class="btn btn-success btn-sm button_style">DETAILS</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</html>

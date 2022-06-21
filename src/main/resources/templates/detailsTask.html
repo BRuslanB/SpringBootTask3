@@ -1,0 +1,97 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate = "layout/main.html">
+    <div layout:fragment = "mainContent">
+        <div class="row">
+            <div th:if = "${one_task != null}">
+                <div class="col-8 mx-auto">
+                    <form th:action="@{'/save_task'}" method="post">
+                        <input type="hidden" name="task_id" th:value="${one_task.getId()}">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>TASK NAME:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="task_name"
+                                       th:value="${one_task.getName()}">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>TASK DESCRIPTION:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <textarea type="text" class="form-control" name="task_description"
+                                          th:text="${one_task.getDescription()}"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>TASK DEADLINE DATE:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <input type="date" class="form-control" name="task_deadline_date"
+                                       th:value="${one_task.getDeadlineDate()}">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>COMPLETED:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <select class="form-select" name="task_completed">
+                                    <option th:value="${'false'}" th:selected="${one_task.isCompleted()}"
+                                            th:text="${'NO'}">
+                                    </option>
+                                    <option th:value="${'true'}" th:selected="${one_task.isCompleted()}"
+                                            th:text="${'YES'}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-danger"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">DELETE</button>
+                                <button class="btn btn-success ms-2">SAVE TASK</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal DELETE -->
+        <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{'/delete_task'}" method="post">
+                        <input type="hidden" name="task_id" th:value="${one_task.getId()}">
+                        <div class="modal-body">
+                            <h5 class="text-center">
+                                Are you sure?
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary">Yes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
